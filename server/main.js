@@ -1,15 +1,21 @@
-let express = require('express');
-let http = require('http');
+const express = require('express');
+const http = require('http');
 let app = express();
 let server = http.createServer(app);
 
 let login_api = require('./router/login_api');
+let swaggerDoc = require('./setting/swagger');
+let db = require('./setting/db_connection').sequelize;
+
+db.sync();
+app.use(swaggerDoc);
+
 
 app.get('/', function (req, res) {
   res.send('Hello');
 });
 
-app.use('/login_api', login_api);
+app.use('/login', login_api);
 
 server.listen(8000, function() {
   console.log('Express server listening on port ' + server.address().port);

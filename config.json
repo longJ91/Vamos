@@ -1,0 +1,9 @@
+{
+  "db_config" :{
+    "username" : "root",
+    "password" : "0526",
+    "database" : "onmeet",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
