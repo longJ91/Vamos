@@ -12,7 +12,7 @@ const options = {
             description: 'Test vamos API ',
         }
     },
-    apis: ['./router/*.js']
+    apis: [ __base +'/router/*.js' , __base +'/model/*.js']
 };
 
 const specs = swaggerJsdoc(options);

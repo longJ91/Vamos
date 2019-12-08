@@ -15,3 +15,27 @@ module.exports = (sequelize, DataTypes) =>{
         }
     }, {timestamps : false});
 }
+
+/**
+    * @swagger
+    * definitions:
+    *  user:
+    *   type: object
+    *   required:
+    *     - useremail
+    *     - password
+    *     - name
+    *   properties:
+    *     id:
+    *       type: integer
+    *       description: ObjectId
+    *     useremail:
+    *       type: string
+    *       description: 유저계정
+    *     password:
+    *       type: string
+    *       description: 비밀번호
+    *     name:
+    *       type: string
+    *       description: 유저이름
+    */
