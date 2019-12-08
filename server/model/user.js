@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>{
     return sequelize.define('user',{
-        useremail:{
+        userEmail:{
             type : DataTypes.STRING(20),
             allowNull : false,
             unique : true
@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) =>{
             allowNull: false
         },
         name :{
+            type: DataTypes.STRING(20),
+            allowNull: false
+        },
+        birthDay : {
+            type: DataTypes.STRING(20),
+            allowNull: true
+        },
+        phoneNumber:{
             type: DataTypes.STRING(20),
             allowNull: false
         }
@@ -22,14 +30,15 @@ module.exports = (sequelize, DataTypes) =>{
     *  user:
     *   type: object
     *   required:
-    *     - useremail
+    *     - userEmail
     *     - password
     *     - name
+    *     - phoneNumber
     *   properties:
     *     id:
     *       type: integer
     *       description: ObjectId
-    *     useremail:
+    *     userEmail:
     *       type: string
     *       description: 유저계정
     *     password:
@@ -38,4 +47,10 @@ module.exports = (sequelize, DataTypes) =>{
     *     name:
     *       type: string
     *       description: 유저이름
+    *     birthDay:
+    *       type: string
+    *       description: 생년월일
+    *     phoneNumber:
+    *       type: string
+    *       description: 핸드폰 번호
     */

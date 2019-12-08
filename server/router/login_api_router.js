@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-let login_api = require('../api/login_api');
+let loginApi = require('../api/login_api');
 
 /**
     * @swagger
@@ -39,9 +39,9 @@ router.get('', function(req, res){
     let pwd = req.query.pwd;
     if(email == null || pwd == null){
         res.status(400).send("NO PARAM");
+        return; 
     }
-
-    login_api.login(email, pwd)
+    loginApi.login(email, pwd)
         .then(result =>{
             res.status(200).json(result);
         })
@@ -79,8 +79,9 @@ router.get('/get_user_info', function(req,res){
     let userId = req.query.id;
     if(userId == null) {
         res.status(400).send("NO PARAM");
+        return; 
     }
-    login_api.get_user_info(userId)
+    loginApi.getUserInfo(userId)
         .then(result=>{
             res.status(200).json(result);
         })
@@ -90,5 +91,19 @@ router.get('/get_user_info', function(req,res){
         });
 });
 
+
+// router.post('/sign_in', function(req, res){
+//     let email = req.body.email;
+//     let pwd = req.body.pwd;
+//     let name = req.body.name;
+//     let phone = req.body.phone;
+//     let birth = req.body.birth;
+
+//     if(!loginApi.validUserInfo(email,pwd, name, phone, birth)){
+//         res.status(400).send("Invalid Form");
+//         return; 
+//     }
+    
+// });
 
 module.exports = router;
