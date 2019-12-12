@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { LoginPageService } from './login-page.service';
 
@@ -13,7 +14,8 @@ export class LoginPageComponent implements OnInit {
   public pwd: string;
 
   constructor(
-    public loginPageService: LoginPageService
+    private route: ActivatedRoute,
+    private loginPageService: LoginPageService
   ) {
     this.email = '';
     this.pwd = '';
@@ -30,4 +32,8 @@ export class LoginPageComponent implements OnInit {
       return this.loginPageService.getLogin(this.email, this.pwd).subscribe(data => console.log(data));
     }
   }
+
+  // signUpPage() {
+  //   this.route.
+  // }
 }
