@@ -1,1 +1,15 @@
-<p>signup-page works!</p>
+<div class="logo"></div>
+
+<div class="login-form">
+    <h5 class="name-title">Name</h5>
+    <input type="text" class="name" [(ngModel)]="name">
+
+    <h5 class="email-title">Email</h5>
+    <input type="text" class="email" [(ngModel)]="email">
+
+    <h5 class="password-title">Password</h5>
+    <input type="text" class="password" [(ngModel)]="pwd">
+</div>
+
+<button type="button" class="signup" (click)="signUp()">Sign up</button>
+<button type="button" class="back" [routerLink]="['']">Back</button>
