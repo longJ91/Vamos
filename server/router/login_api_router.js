@@ -35,6 +35,7 @@ let loginApi = require('../api/login_api');
     */
 
 router.get('', function(req, res){
+    //query면 url에 정보 유출 되니까 body로 encoding 해서 하는거 맞춰서 바꿔야 할듯
     let email = req.query.email;
     let pwd = req.query.pwd;
     if(email == null || pwd == null){
@@ -43,6 +44,11 @@ router.get('', function(req, res){
     }
     loginApi.login(email, pwd)
         .then(result =>{
+            // cros origin 문제 해결 방법
+            // 추가적으로 미들웨어에 추가 해야함 (front와 host 맞추긴 해야함)
+            // 참고 해결 방법 : https://velog.io/@wlsdud2194/cors
+            // 참고 Cros origin problem 이해 : https://homoefficio.github.io/2015/07/21/Cross-Origin-Resource-Sharing/
+            res.header("Access-Control-Allow-Origin", "*");
             res.status(200).json(result);
         })
         .catch(err =>{
@@ -75,7 +81,7 @@ router.get('', function(req, res){
     *          items:
     *           $ref: '#/definitions/user'
     */
-router.get('/get_user_info', function(req,res){
+router.get('/get_user_info', async function(req,res){
     let userId = req.query.id;
     if(userId == null) {
         res.status(400).send("NO PARAM");
@@ -89,6 +95,15 @@ router.get('/get_user_info', function(req,res){
             console.log(err);
             res.status(500).send(err);
         });
+
+    // login.api.js async 안에서 Promise.rejcet 사용 하는게 맞는가?
+    // const result = await loginApi.getUserInfo(userId);
+    // if(result){
+    //     //
+    // }else{
+    //     //
+    // }
+
 });
 
 

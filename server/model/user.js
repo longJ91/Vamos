@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) =>{
     return sequelize.define('user',{
+        //email 길이가 너무 짧음
         userEmail:{
-            type : DataTypes.STRING(20),
+            type : DataTypes.STRING(100),
             allowNull : false,
             unique : true
         },
