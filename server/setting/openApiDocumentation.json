@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Test vamos API",
+    "version": "1.0.0",
+    "title": "Vamos API docs"
+  },
+  "tags": [
+    {
+      "name": "user API",
+      "description": "management user api"
+    }
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user API"
+        ],
+        "summary": "login process",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "pwd": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "abc@naver.com",
+                  "pwd": "123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "login success return userId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "description": "userId",
+                  "example": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/get_info": {
+      "get": {
+        "tags": [
+          "user API"
+        ],
+        "summary": "get user info by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search success return user info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "userEmail",
+          "password",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "userEmail": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "birthDay": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

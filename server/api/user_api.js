@@ -3,20 +3,20 @@ let {User} = require('../setting/db_connection');
 module.exports.getUserInfo = async function(userId){
     let user = await User.findOne({where:{id: userId}});
     if(user == null){
-        return Promise.reject("NO INFO");
+        throw Error(`No user with ${userId}`);
     }
-    return Promise.resolve(user);
+    return user;
 }
 
 module.exports.login = async function(email, pwd){
     let user = await User.findOne({where:{userEmail: email}});
-    if(user == null) {
-        return Promise.reject("NO USER WITH "+ email);
+    if(user == null){
+        throw Error(`No user with ${email}`);
     }
     if(user.password !== pwd){
-        return Promise.reject("WRONG PASSWORD "+ email);
+        throw Error(`Incorrect password`);
     }
-    return Promise.resolve({'id' : user.id});
+    return user.id;
 }
 
 module.exports.validUserInfo = function(email,pwd, name, phone, birth){
