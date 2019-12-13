@@ -2,13 +2,13 @@
 
 <div class="login-form">
     <h5 class="name-title">Name</h5>
-    <input type="text" class="name" [(ngModel)]="name">
+    <input type="text" class="name" placeholder="Enter a name" [(ngModel)]="name">
 
     <h5 class="email-title">Email</h5>
-    <input type="text" class="email" [(ngModel)]="email">
+    <input type="text" class="email" placeholder="Enter a email" [(ngModel)]="email">
 
     <h5 class="password-title">Password</h5>
-    <input type="text" class="password" [(ngModel)]="pwd">
+    <input type="password" class="password" placeholder="Enter a password" [(ngModel)]="pwd">
 </div>
 
 <button type="button" class="signup" (click)="signUp()">Sign up</button>
