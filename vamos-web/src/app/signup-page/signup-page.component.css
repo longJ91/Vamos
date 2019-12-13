@@ -130,3 +130,8 @@
     background: rgba(251, 230, 230, 0.44);
     border-radius: 7px;
 }
+
+
+button{
+    cursor:pointer;
+}
