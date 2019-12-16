@@ -8,6 +8,7 @@ let server = http.createServer(app);
 let db = require('./setting/db_connection').sequelize;
 const openApiDocumentation = require('./setting/openApiDocumentation');
 const {corsOption} = require('./setting/cors');
+let {CustomError} = require('./util/error_util');
 let userApiRouter = require('./router/user_api_router');
 global.__base = __dirname;
 db.sync();
@@ -24,9 +25,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 app.use('/user', userApiRouter);
 
 app.use(function(error, req, res, next) {
-  //async error end point
-  console.error(error.stack);
-  res.status(500).json({ message: error.message });
+  if(error instanceof CustomError){
+    //custom error by devloper
+    console.error(error.message);
+    res.status(error.status).json({ Error: error.message});
+  }
+  else{
+    //async error end point
+    console.error(error.stack);
+    res.status(500).json({ Error: error.message});
+  }
 });
 
 server.listen(8000, function() {

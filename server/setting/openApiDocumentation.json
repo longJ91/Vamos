@@ -87,6 +87,100 @@
           }
         }
       }
+    },
+    "/user/sign_in": {
+      "post": {
+        "tags": [
+          "user API"
+        ],
+        "summary": "sign in",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "pwd",
+                  "name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "pwd": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "birth": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "abcd@naver.com",
+                  "pwd": "1234567",
+                  "name": "wonjin",
+                  "birth": "940526",
+                  "phone": "010-1234-5678"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success register return id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "description": "userId",
+                  "example": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/is_duplicate_email": {
+      "summary": "check duplicate of email ",
+      "get": {
+        "summary": "check duplicate return boolean",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "user email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "abc@naver.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "if email is duplicated return true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user API"
+        ]
+      }
     }
   },
   "components": {
@@ -109,9 +203,6 @@
             "type": "string"
           },
           "name": {
-            "type": "string"
-          },
-          "email": {
             "type": "string"
           },
           "birthDay": {
