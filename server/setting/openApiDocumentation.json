@@ -7,34 +7,100 @@
   },
   "tags": [
     {
-      "name": "user API",
+      "name": "User API",
       "description": "management user api"
+    },
+    {
+      "name": "TempUser API",
+      "description": "management TempUser api"
     }
   ],
   "paths": {
+    "/user/get_info": {
+      "get": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Get userInfo by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search success return user info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/is_duplicate_email": {
+      "get": {
+        "summary": "Check duplication of email",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "user email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abc@naver.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "if email is duplicated return true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User API"
+        ]
+      }
+    },
     "/user/login": {
       "post": {
         "tags": [
-          "user API"
+          "User API"
         ],
-        "summary": "login process",
+        "summary": "Login process",
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "abc@naver.com"
                   },
                   "pwd": {
-                    "type": "string"
+                    "type": "string",
+                    "default": 123456
                   }
-                },
-                "example": {
-                  "email": "abc@naver.com",
-                  "pwd": "123"
                 }
               }
             }
@@ -56,82 +122,14 @@
         }
       }
     },
-    "/user/get_info": {
-      "get": {
-        "tags": [
-          "user API"
-        ],
-        "summary": "get user info by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "description": "userId",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "search success return user info",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/user"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/user/sign_in": {
       "post": {
         "tags": [
-          "user API"
+          "User API"
         ],
-        "summary": "sign in",
+        "summary": "SignIn process",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "pwd",
-                  "name"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "pwd": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "birth": {
-                    "type": "string"
-                  },
-                  "phone": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "email": "abcd@naver.com",
-                  "pwd": "1234567",
-                  "name": "wonjin",
-                  "birth": "940526",
-                  "phone": "010-1234-5678"
-                }
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/UserBody"
         },
         "responses": {
           "200": {
@@ -149,25 +147,135 @@
         }
       }
     },
-    "/user/is_duplicate_email": {
-      "summary": "check duplicate of email ",
+    "/user/update_user_info": {
+      "post": {
+        "summary": "Edit userInfo by Id",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "email",
+                  "pwd",
+                  "name"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "default": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "default": "abc@naver.com"
+                  },
+                  "pwd": {
+                    "type": "string",
+                    "default": 123456
+                  },
+                  "name": {
+                    "type": "string",
+                    "default": "홍길동"
+                  },
+                  "birth": {
+                    "type": "string",
+                    "default": 960909
+                  },
+                  "phone": {
+                    "type": "string",
+                    "default": "010-000-0000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "return state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "UPDATE"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User API"
+        ]
+      }
+    },
+    "/user/widthdrawal": {
+      "post": {
+        "summary": "Delete user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Delete target user Id",
+                    "default": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "return state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User API"
+        ]
+      }
+    },
+    "/user/is_duplicate_temp_name": {
       "get": {
-        "summary": "check duplicate return boolean",
+        "summary": "Check duplication of name",
         "parameters": [
           {
-            "name": "email",
+            "name": "name",
             "in": "query",
-            "description": "user email",
+            "description": "user name",
             "required": true,
             "schema": {
               "type": "string",
-              "default": "abc@naver.com"
+              "example": "홍길동"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "group id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "if email is duplicated return true",
+            "description": "if name is duplicated return true",
             "content": {
               "application/json": {
                 "schema": {
@@ -178,25 +286,70 @@
           }
         },
         "tags": [
-          "user API"
+          "TempUser API"
+        ]
+      }
+    },
+    "/user/temp_login": {
+      "post": {
+        "summary": "Login process for TempUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TempUserBody"
+        },
+        "responses": {
+          "200": {
+            "description": "login success return temp userId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "description": "userId",
+                  "example": 1
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "TempUser API"
+        ]
+      }
+    },
+    "/user/temp_sign_in": {
+      "post": {
+        "summary": "SignIn process TempUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TempUserBody"
+        },
+        "responses": {
+          "200": {
+            "description": "success register return id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "description": "userId",
+                  "example": 1
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "TempUser API"
         ]
       }
     }
   },
   "components": {
     "schemas": {
-      "user": {
+      "User": {
         "type": "object",
-        "required": [
-          "userEmail",
-          "password",
-          "name"
-        ],
         "properties": {
           "id": {
             "type": "integer"
           },
-          "userEmail": {
+          "email": {
             "type": "string"
           },
           "password": {
@@ -210,6 +363,91 @@
           },
           "phoneNumber": {
             "type": "string"
+          }
+        }
+      },
+      "TempUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "UserBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "pwd",
+                "name"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "default": "abc@naver.com"
+                },
+                "pwd": {
+                  "type": "string",
+                  "default": 123456
+                },
+                "name": {
+                  "type": "string",
+                  "default": "홍길동"
+                },
+                "birth": {
+                  "type": "string",
+                  "default": 960909
+                },
+                "phone": {
+                  "type": "string",
+                  "default": "010-000-0000"
+                }
+              }
+            }
+          }
+        }
+      },
+      "TempUserBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "pwd",
+                "groupId"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "default": "마이클"
+                },
+                "pwd": {
+                  "type": "string",
+                  "default": 1234
+                },
+                "groupId": {
+                  "type": "integer",
+                  "default": 1
+                }
+              }
+            }
           }
         }
       }

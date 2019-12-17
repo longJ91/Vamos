@@ -9,6 +9,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User = require('./../model/user')(sequelize, Sequelize);
+db.TempUser = require('./../model/tempUser')(sequelize, Sequelize);
 
  module.exports = db;
 
