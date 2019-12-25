@@ -16,7 +16,7 @@
     }
   ],
   "paths": {
-    "/user/get_info": {
+    "/user/info": {
       "get": {
         "tags": [
           "User API"
@@ -48,7 +48,7 @@
         }
       }
     },
-    "/user/is_duplicate_email": {
+    "/user/duplicate-email": {
       "get": {
         "summary": "Check duplication of email",
         "parameters": [
@@ -122,7 +122,7 @@
         }
       }
     },
-    "/user/sign_in": {
+    "/user/sign-up": {
       "post": {
         "tags": [
           "User API"
@@ -147,7 +147,7 @@
         }
       }
     },
-    "/user/update_user_info": {
+    "/user/edit-info": {
       "post": {
         "summary": "Edit userInfo by Id",
         "requestBody": {
@@ -248,7 +248,7 @@
         ]
       }
     },
-    "/user/is_duplicate_temp_name": {
+    "/user/duplicate-temp-name": {
       "get": {
         "summary": "Check duplication of name",
         "parameters": [
@@ -290,7 +290,7 @@
         ]
       }
     },
-    "/user/temp_login": {
+    "/user/temp-login": {
       "post": {
         "summary": "Login process for TempUser",
         "requestBody": {
@@ -315,7 +315,7 @@
         ]
       }
     },
-    "/user/temp_sign_in": {
+    "/user/temp-sign-up": {
       "post": {
         "summary": "SignIn process TempUser",
         "requestBody": {
