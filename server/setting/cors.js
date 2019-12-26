@@ -1,4 +1,4 @@
-const whiteList = ['http://localhost:4200','http://localhost:8000'];
+const whiteList = ['http://localhost:4200','http://localhost:8000', 'http://localhost:3000'];
 
 module.exports.corsOptions = {
     origin: function(origin, callback){
