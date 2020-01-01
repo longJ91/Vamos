@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) =>{
     return meeting.define('group',{
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
