@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import './LoginPage.css'
+import './SignUpPage.css'
 
 import * as api from '../lib/api';
 
-
-class LoginPage extends Component {
+class SignUpPage extends Component {
     state = {
         email: '',
-        pwd: ''
+        pwd: '',
+        name:''
     }
 
-    postLogin = async (email, pwd) => {
-        // const result = await api.getTest();
-        const result = await api.postLogin(email, pwd);
-        console.log(result);
-    }
+    // postLogin = async (email, pwd) => {
+    //     // const result = await api.getTest();
+    //     const result = await api.postLogin(email, pwd);
+    //     console.log(result);
+    // }
 
     handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,8 +26,8 @@ class LoginPage extends Component {
     }
 
     handleClick = () => {
-        const { email, pwd } = this.state;
-        this.postLogin(email, pwd);
+        const { email, pwd, name } = this.state;
+        // this.postLogin(email, pwd);
     }
 
     componentDidMount(){
@@ -36,9 +36,9 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div className="div-login-page">
+            <div className="div-signup-page">
                 <div className="div-logo">
-                    <svg className="svg-logo"/>
+                    <svg className="svg-logo" />
                 </div>
                 <div className="div-email">
                     <TextField name="email" label="Email" variant="outlined" onChange={this.handleChange}/>
@@ -46,17 +46,20 @@ class LoginPage extends Component {
                 <div className="div-pwd">
                     <TextField name="pwd" label="Password" variant="outlined" onChange={this.handleChange}/>
                 </div>
+                <div className="div-name">
+                    <TextField name="name" label="Name" variant="outlined" onChange={this.handleChange}/>
+                </div>
                 <div className="div-button">
                     <Button variant="contained" color="primary" size="large" onClick={this.handleClick}>
-                        로그인
+                        회원가입
                     </Button>
                 </div>
-                <div className="div-signup">
-                    <p>New to Vamos? Create an account.</p>
+                <div className="div-signin">
+                    <p>Do you have a account? Go to the login page.</p>
                 </div>
             </div>
         );
     }
 }
 
-export default LoginPage;
+export default SignUpPage;
