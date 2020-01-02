@@ -7,49 +7,54 @@ module.exports = (sequelize, DataTypes) =>{
         },
         name:{
             type : DataTypes.STRING(100),
-            allowNull : false
+            allowNull : false,
+            comment : "name of this group"
         },
         descript: {
             type: DataTypes.STRING(1000),
-            allowNull: false
+            allowNull: false,
+            comment : "description of this group"
         },
         groupHostId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            comment : "group host's ID who created this group"
         },
-        groupDates : { // 모임 후보 날짜
-            type: DataTypes.STRING(20),
-            allowNull: false
+        groupDates : {
+            type: DataTypes.DATE(),
+            allowNull: false,
+            comment : "the meeting candidate dates of the vote"
         },
         groupMemberN :{
-            type: DataTypes.STRING(20),
-            allowNull: false
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment : "the number of members who vote"
         },
         voteMemberN :{
-            type: DataTypes.STRING(20),
-            allowNull: false
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment : "the number of members who voted"
         },
         voteCreatedDate:{
-            type: DataTypes.STRING(20),
-            allowNull: false
+            type: DataTypes.DATE(),
+            allowNull: false,
+            comment : "the date when create this group"
         },
         voteEndDate:{
-            type: DataTypes.STRING(20),
-            allowNull: false
+            type: DataTypes.DATE(),
+            allowNull: false,
+            comment : "this vote will closed voteEndDate that made by host"
         },
         voteFixedDate:{
-            type: DataTypes.STRING(20),
-            allowNull: true
+            type: DataTypes.DATE(),
+            allowNull: true,
+            comment : "the result of vote"
         },
         voteURL:{
-            type: DataTypes.STRING(20),
-            allowNull: false
+            type: DataTypes.STRING(1000),
+            allowNull: false,
+            comment : "voters can access through this url"
         }
-        // TODO : 만료일 추가
-        // expiredTime:{
-        //     type: DataTypes.STRING(20),
-        //     allowNull: true
-        // }
     }, {timestamps : false},
     {
         validate: {

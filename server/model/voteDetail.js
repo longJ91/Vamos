@@ -2,24 +2,27 @@ module.exports = (sequelize, DataTypes) =>{
     return sequelize.define('voteDetail',{
         groupId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
-        groupHostId: {
+        voterId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            comment : "Id fo voter"
+        },
+        userType : {
+            type : DataTypes.STRING(2),
+            allowNull : false,
+            comment : "user's type, T (tempUser) or U (User)"
         },
         selectedDate : {
             type: DataTypes.STRING(20),
-            allowNull: true
+            allowNull: true,
+            comment : "the date when voter selected"
         },
         name:{
             type : DataTypes.STRING(100),
-            allowNull : false
+            allowNull : false,
+            comment : "the name of voter"
         }
-        // TODO : 만료일 추가
-        // expiredTime:{
-        //     type: DataTypes.STRING(20),
-        //     allowNull: true
-        // }
     }, {timestamps : false});
 }

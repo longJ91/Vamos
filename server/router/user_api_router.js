@@ -34,9 +34,6 @@ router.get('/duplicate-email', wrap(async function(req, res){
 
 router.post('/sign-up', wrap(async function(req, res){
     let userForm = req.body;
-    if(!userApi.validUserInfo(userForm)){
-        throw new CustomError(`Invalid Form`, 400);
-    }
     let duplicated = await userApi.isDuplicateEmail(userForm.email);
     if(duplicated){
         throw new CustomError(`Duplicate Email address`);
@@ -47,9 +44,6 @@ router.post('/sign-up', wrap(async function(req, res){
 
 router.post('/edit-info', wrap(async function(req,res){
     let userForm = req.body;
-    if(!userApi.validUserInfo(userForm)){
-        throw new CustomError(`Invalid Form`, 400);
-    }
     await userApi.updateUserInfo(userForm);
     res.status(200).json("UPDATE");
 }));
