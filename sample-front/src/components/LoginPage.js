@@ -30,10 +30,29 @@ class LoginPage extends Component {
     }
 
     componentDidMount(){
-        
+        window.Kakao.Auth.createLoginButton({
+          container: "#kakao-login-btn",
+          success: function(authObj) {
+            // 로그인 성공시, API를 호출합니다.
+            window.Kakao.API.request({
+              url: "/v2/user/me",
+              success: function(res) {
+                alert(JSON.stringify(res));
+              },
+              fail: function(error) {
+                alert(JSON.stringify(error));
+              }
+            });
+          },
+          fail: function(err) {
+            alert(JSON.stringify(err));
+          }
+        });
     }
 
     render() {
+        window.Kakao.init("0ff66458bef2e0cd76aadc3562843c62"); 
+
         return (
             <div className="div-login-page">
                 <div className="div-logo">
@@ -52,6 +71,9 @@ class LoginPage extends Component {
                     <Button variant="contained" color="primary" fullWidth onClick={this.handleClick}>
                         로그인
                     </Button>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                    <a id="kakao-login-btn"></a>
                 </div>
                 <div className="div-signin">
                     <p>New to Vamos? Create an account.</p>
