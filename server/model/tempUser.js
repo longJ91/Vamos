@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) =>{
     return sequelize.define('tempUser',{
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         groupId: {
             type: DataTypes.INTEGER,
             allowNull: false
