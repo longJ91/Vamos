@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './SignUpPage.css'
+import { NavLink } from 'react-router-dom';
 
 import * as api from '../lib/api';
 
@@ -55,7 +56,7 @@ class SignUpPage extends Component {
                     </Button>
                 </div>
                 <div className="div-signin">
-                    <p>Do you have a account? Go to the login page.</p>
+                    <p>Do you have a account? <NavLink exact to="/" > Go to the login page.</NavLink></p>
                 </div>
             </div>
         );
