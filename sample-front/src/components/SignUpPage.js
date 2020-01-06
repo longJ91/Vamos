@@ -1,34 +1,42 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { SignUpPageActions } from 'store/actionCreators';
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 import './SignUpPage.css'
-import { NavLink } from 'react-router-dom';
 
 import * as api from '../lib/api';
 
 class SignUpPage extends Component {
-    state = {
-        email: '',
-        pwd: '',
-        name:''
+    // state = {
+    //     email: '',
+    //     pwd: '',
+    //     name:''
+    // }
+
+    getDuplicateEmail = async (email) => {
+        const result = await api.getDuplicateEmail(email);
+        console.log(result);
     }
 
-    // postLogin = async (email, pwd) => {
-    //     // const result = await api.getTest();
-    //     const result = await api.postLogin(email, pwd);
-    //     console.log(result);
-    // }
+    postSignUp = async (email, pwd, name) => {
+        const result = await api.postSignUp(email, pwd, name);
+        console.log(result);
+    }
 
     handleChange = (e) => {
         const { name, value } = e.target;
-        this.setState({
-            [name]: value
-        });
+        SignUpPageActions.changeInput(name, value);
     }
 
     handleClick = () => {
-        const { email, pwd, name } = this.state;
-        // this.postLogin(email, pwd);
+        const { email, pwd, name } = this.props;
+
+        const validation = this.getDuplicateEmail(email);
+        !validation ? this.postSignUp(email, pwd, name) : console.log(`Email isn't validation`)
     }
 
     componentDidMount(){
@@ -36,22 +44,24 @@ class SignUpPage extends Component {
     }
 
     render() {
+        const { handleChange, handleClick } = this;
+
         return (
             <div className="div-signup-page">
                 <div className="div-logo">
                     <svg className="svg-logo" />
                 </div>
                 <div className="div-email">
-                    <TextField name="email" label="Email" variant="outlined" onChange={this.handleChange}/>
+                    <TextField name="email" label="Email" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-pwd">
-                    <TextField name="pwd" label="Password" variant="outlined" onChange={this.handleChange}/>
+                    <TextField name="pwd" label="Password" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-name">
-                    <TextField name="name" label="Name" variant="outlined" onChange={this.handleChange}/>
+                    <TextField name="name" label="Name" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-button">
-                    <Button variant="contained" color="primary" size="large" onClick={this.handleClick}>
+                    <Button variant="contained" color="primary" size="large" onClick={handleClick}>
                         회원가입
                     </Button>
                 </div>
@@ -63,4 +73,12 @@ class SignUpPage extends Component {
     }
 }
 
-export default SignUpPage;
+// export default SignUpPage;
+export default connect(
+    //store의 state 값을 props로 전달 받아 온다.
+    ({ signUpPage }) => ({
+        email: signUpPage.email,
+        pwd: signUpPage.pwd,
+        name: signUpPage.name
+    })
+)(SignUpPage);
