@@ -29,31 +29,6 @@ module.exports.isDuplicateEmail = async function(email){
     return true;
 }
 
-module.exports.validUserInfo = function(userForm){
-    const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const phoneFormat = /^[0-9]{3}[-]+[0-9]{3,4}[-]+[0-9]{4}$/;
-    const birthFormat = /^[0-9]{6}/;
-    const nameFormat = /^[^0-9]*/;
-    const PWD_MAX_LENGTH =5;
-
-    if(commonUtil.isEmpty(userForm.email)|| !userForm.email.match(mailFormat)){
-        return false;
-    }
-    if(commonUtil.isEmpty(userForm.pwd)|| !userForm.pwd.length > PWD_MAX_LENGTH ){
-        return false;
-    }
-    if(commonUtil.isEmpty(userForm.name) || !userForm.name.match(nameFormat)){
-        return false;
-    }
-    if(!commonUtil.isEmpty(userForm.phone) && !userForm.phone.match(phoneFormat)){
-        return false;
-    }
-    if(!commonUtil.isEmpty(userForm.birth) && !userForm.birth.match(birthFormat)){
-        return false;
-    }
-    return true;
-}
-
 module.exports.insertUserInfo = async function(userForm){
     let result = await User.create({
                     email : userForm.email,

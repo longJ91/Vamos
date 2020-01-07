@@ -14,3 +14,15 @@ export const postLogin = async (email = '', pwd = '') => {
     pwd: pwd
   });
 }
+
+export const getDuplicateEmail = async (email = '') => {
+  return await API.get(`user/duplicate-email?email=${email}`);
+}
+
+export const postSignUp = async (email = '', pwd = '', name = '') => {
+  return await API.post(`user/sign-up`, {
+    email : email,
+    pwd: pwd,
+    name: name
+  });
+}
