@@ -5,6 +5,8 @@ import SignUpPage from './components/SignUpPage'
 
 class App extends Component {
     render() {
+        window.Kakao.init("0ff66458bef2e0cd76aadc3562843c62"); 
+
         return(
             <div>
                 <Route exact path='/' component={LoginPage}/>

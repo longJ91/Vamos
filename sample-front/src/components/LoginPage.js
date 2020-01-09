@@ -38,29 +38,27 @@ class LoginPage extends Component {
 
     componentDidMount(){
         window.Kakao.Auth.createLoginButton({
-          container: "#kakao-login-btn",
-          success: function(authObj) {
-            // 로그인 성공시, API를 호출합니다.
-            window.Kakao.API.request({
-              url: "/v2/user/me",
-              success: function(res) {
-                alert(JSON.stringify(res));
-              },
-              fail: function(error) {
-                alert(JSON.stringify(error));
-              }
-            });
-          },
-          fail: function(err) {
-            alert(JSON.stringify(err));
-          }
+            container: "#kakao-login-btn",
+            success: function(authObj) {
+                    // 로그인 성공시, API를 호출합니다.
+                    window.Kakao.API.request({
+                    url: "/v2/user/me",
+                    success: function(res) {
+                        alert(JSON.stringify(res));
+                    },
+                    fail: function(error) {
+                        alert(JSON.stringify(error));
+                    }
+                });
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+            }
         });
     }
 
     render() {
         const { handleChange, handleClick } = this;
-
-        window.Kakao.init("0ff66458bef2e0cd76aadc3562843c62"); 
 
         return (
             <div className="div-login-page">
@@ -71,7 +69,7 @@ class LoginPage extends Component {
                     <TextField name="email" label="Email" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-pwd">
-                    <TextField name="pwd" label="Password" variant="outlined" onChange={handleChange}/>
+                    <TextField type="password" name="pwd" label="Password" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-button">
                     <Button variant="contained" color="primary" size="large" onClick={handleClick}>

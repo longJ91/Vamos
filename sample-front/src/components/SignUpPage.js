@@ -36,7 +36,7 @@ class SignUpPage extends Component {
         const { email, pwd, name } = this.props;
 
         const validation = this.getDuplicateEmail(email);
-        !validation ? this.postSignUp(email, pwd, name) : console.log(`Email isn't validation`)
+        validation ? this.postSignUp(email, pwd, name) : console.log(`Email isn't validation`)
     }
 
     componentDidMount(){
@@ -55,7 +55,7 @@ class SignUpPage extends Component {
                     <TextField name="email" label="Email" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-pwd">
-                    <TextField name="pwd" label="Password" variant="outlined" onChange={handleChange}/>
+                    <TextField type="password" name="pwd" label="Password" variant="outlined" onChange={handleChange}/>
                 </div>
                 <div className="div-name">
                     <TextField name="name" label="Name" variant="outlined" onChange={handleChange}/>
