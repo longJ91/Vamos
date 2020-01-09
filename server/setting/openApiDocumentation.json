@@ -13,6 +13,10 @@
     {
       "name": "TempUser API",
       "description": "management TempUser api"
+    },
+    {
+      "name": "Group API",
+      "description": "management Group api"
     }
   ],
   "paths": {
@@ -339,10 +343,135 @@
           "TempUser API"
         ]
       }
+    },
+    "/group/getList": {
+      "summary": "get group list when user access to main page",
+      "get": {
+        "responses": {
+          "200": {
+            "description": "if email is duplicated return true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Group"
+                  },
+                  "description": "user's group list"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "user auto-increment id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "tags": [
+          "Group API"
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
+      "Group": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "vamos"
+          },
+          "descript": {
+            "type": "string",
+            "example": "make vamos service for making group easily"
+          },
+          "groupHostId": {
+            "type": "integer",
+            "example": 3
+          },
+          "groupDates": {
+            "type": "string",
+            "example": "[200101,200103,200526,200803,200611,201202]"
+          },
+          "groupMemberN": {
+            "type": "integer",
+            "example": 4
+          },
+          "voteMemberN": {
+            "type": "integer",
+            "example": 1
+          },
+          "voteCreatedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2020-01-09"
+          },
+          "voteEndDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2020-12-12"
+          },
+          "voteFixedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2020-05-26"
+          },
+          "voteURL": {
+            "type": "string",
+            "example": "http://blahblahblahblah22222&vamos=success"
+          }
+        }
+      },
+      "VoteDetail": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer"
+          },
+          "voterId": {
+            "type": "integer"
+          },
+          "userType": {
+            "type": "string"
+          },
+          "selectedDate": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "TempUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "integer"
+          }
+        }
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -363,23 +492,9 @@
           },
           "phoneNumber": {
             "type": "string"
-          }
-        }
-      },
-      "TempUser": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
           },
-          "name": {
+          "kakaoId": {
             "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "groupId": {
-            "type": "integer"
           }
         }
       }
