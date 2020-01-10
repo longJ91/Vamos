@@ -23,8 +23,7 @@ class SignUpPage extends Component {
     }
 
     postSignUp = async (email, pwd, name) => {
-        const result = await api.postSignUp(email, pwd, name);
-        console.log(result);
+        return await api.postSignUp(email, pwd, name);
     }
 
     handleChange = (e) => {
@@ -36,7 +35,20 @@ class SignUpPage extends Component {
         const { email, pwd, name } = this.props;
 
         const validation = this.getDuplicateEmail(email);
-        validation ? this.postSignUp(email, pwd, name) : console.log(`Email isn't validation`)
+        if (validation) {
+            this.postSignUp(email, pwd, name)
+            .then(response => {
+                this.props.history.push('/');
+            }).catch(error => {
+                if (error.response.status === 500) {
+                    alert(error.response.data.Error);
+                } else {
+                    console.log(error.response);
+                }
+            });
+        } else {
+            console.log(`Email isn't validation`)
+        }
     }
 
     componentDidMount(){

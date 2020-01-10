@@ -18,9 +18,7 @@ class LoginPage extends Component {
     // }
 
     postLogin = async (email, pwd) => {
-        // const result = await api.getTest();
-        const result = await api.postLogin(email, pwd);
-        console.log(result);
+        return await api.postLogin(email, pwd);
     }
 
     handleChange = (e) => {
@@ -33,7 +31,20 @@ class LoginPage extends Component {
 
     handleClick = () => {
         const { email, pwd } = this.props;
-        this.postLogin(email, pwd);
+
+        this.postLogin(email, pwd)
+        .then(response => {
+            // 수정 필요
+            console.log(response);
+            localStorage.setItem("USER_ID", response.data);
+            this.props.history.push('/meeting-page');
+        }).catch(error => {
+            if (error.response.status === 500) {
+                alert(error.response.data.Error);
+            } else {
+                console.log(error.response.data);
+            }
+        });
     }
 
     componentDidMount(){
