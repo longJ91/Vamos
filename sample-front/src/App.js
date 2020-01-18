@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage'
+import MeetingPage from './components/MeetingPage';
 
 class App extends Component {
     render() {
@@ -11,6 +12,7 @@ class App extends Component {
             <div>
                 <Route exact path='/' component={LoginPage}/>
                 <Route exact path='/sign-up-page' component={SignUpPage}/>
+                <Route exact path='/meeting-page' component={MeetingPage}/>
             </div>
         );
     }
