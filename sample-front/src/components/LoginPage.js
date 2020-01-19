@@ -21,10 +21,6 @@ class LoginPage extends Component {
         return await api.postLogin(email, pwd);
     }
 
-    postKakaoLigin = async (userId, kakaoName, email) => {
-        return await api.postKakaoLogin(userId, kakaoName, email);
-    }
-
     handleChange = (e) => {
         const { name, value } = e.target;
         // this.setState({
@@ -60,7 +56,7 @@ class LoginPage extends Component {
                     url: "/v2/user/me",
                     success: function(res) {
                         console.log(JSON.stringify(res));
-                        this.postKakaoLogin(res.id, res.profile.nickname, '')
+                        api.postKakaoLogin(res.id, res.properties.nickname, '')
                         .then(response => {
                             // 수정 필요
                             console.log(response);
