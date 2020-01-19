@@ -44,6 +44,7 @@ router.post('/sign-up', wrap(async function(req, res){
 
 router.post('/edit-info', wrap(async function(req,res){
     let userForm = req.body;
+    await userApi.getUserInfo(userForm.id); //check user
     await userApi.updateUserInfo(userForm);
     res.status(200).json({status : "UPDATE"});
 }));
