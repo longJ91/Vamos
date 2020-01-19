@@ -14,7 +14,7 @@ router.post('/login', wrap(async function(req, res){
     res.status(200).json({uid: result});
 }));
 
-router.get('/get_info', wrap(async function(req,res){
+router.get('/info', wrap(async function(req,res){
     let userId = req.query.id;
     if(commonUtil.isEmpty(userId)) {
         throw new CustomError(`No Parameter userId`, 400);
@@ -23,7 +23,7 @@ router.get('/get_info', wrap(async function(req,res){
     res.status(200).json(result);
 }));
 
-router.get('/is_duplicate_email', wrap(async function(req, res){
+router.get('/duplicate-email', wrap(async function(req, res){
     let email = req.query.email;
     if(commonUtil.isEmpty(email)) {
         throw new CustomError(`No Parameter email`, 400);
@@ -32,7 +32,7 @@ router.get('/is_duplicate_email', wrap(async function(req, res){
     res.status(200).json({duplicate_email : duplicated});
 }));
 
-router.post('/sign_in', wrap(async function(req, res){
+router.post('/sign-up', wrap(async function(req, res){
     let userForm = req.body;
     let duplicated = await userApi.isDuplicateEmail(userForm.email);
     if(duplicated){
@@ -42,7 +42,7 @@ router.post('/sign_in', wrap(async function(req, res){
     res.status(200).json({uid: id});
 }));
 
-router.post('/update_user_info', wrap(async function(req,res){
+router.post('/edit-info', wrap(async function(req,res){
     let userForm = req.body;
     await userApi.updateUserInfo(userForm);
     res.status(200).json({status : "UPDATE"});
@@ -57,7 +57,7 @@ router.post('/widthdrawal', wrap(async function(req, res){
     res.status(200).json({status : "SUCCESS"});
 }));
 
-router.post('/temp_login', wrap(async function(req, res){
+router.post('/temp-login', wrap(async function(req, res){
     let name = req.body.name;
     let pwd = req.body.pwd;
     let groupId = req.body.groupId;
@@ -69,7 +69,7 @@ router.post('/temp_login', wrap(async function(req, res){
     res.status(200).json({uid: result});
 }));
 
-router.get('/is_duplicate_temp_name', wrap(async function(req, res){
+router.get('/duplicate-temp-name', wrap(async function(req, res){
     let name = req.query.name;
     let groupId = req.query.groupId;
     if(commonUtil.isEmpty(name)|| commonUtil.isEmpty(groupId)) {
@@ -79,7 +79,7 @@ router.get('/is_duplicate_temp_name', wrap(async function(req, res){
     res.status(200).json({status :duplicated});
 }));
 
-router.post('/temp_sign_in', wrap(async function(req,res){
+router.post('/temp-sign-up', wrap(async function(req,res){
     let name = req.body.name;
     let pwd = req.body.pwd;
     let groupId = req.body.groupId;
