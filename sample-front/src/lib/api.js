@@ -15,6 +15,14 @@ export const postLogin = async (email = '', pwd = '') => {
   });
 }
 
+export const postKakaoLogin = async (userId = '', kakaoName = '', email = '') => {
+  return await API.post(`user/kakao-login`, {
+    userId : userId,
+    kakaoName : kakaoName,
+    email : email,
+  });
+}
+
 export const getDuplicateEmail = async (email = '') => {
   return await API.get(`user/duplicate-email?email=${email}`);
 }
