@@ -69,7 +69,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "boolean"
+                  "type": "object",
+                  "properties": {
+                    "duplicate_email": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
                 }
               }
             }
@@ -112,9 +118,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "integer",
-                  "description": "userId",
-                  "example": 1
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "integer",
+                      "description": "userId",
+                      "example": 1
+                    }
+                  }
                 }
               }
             }
@@ -137,9 +148,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "integer",
-                  "description": "userId",
-                  "example": 1
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "integer",
+                      "description": "userId",
+                      "example": 1
+                    }
+                  }
                 }
               }
             }
@@ -198,8 +214,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "UPDATE"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "UPDATE"
+                    }
+                  }
                 }
               }
             }
@@ -236,8 +257,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "SUCCESS"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "SUCCESS"
+                    }
+                  }
                 }
               }
             }
@@ -279,7 +305,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "boolean"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    }
+                  }
                 }
               }
             }
@@ -302,9 +333,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "integer",
-                  "description": "userId",
-                  "example": 1
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "integer",
+                      "description": "userId",
+                      "example": 1
+                    }
+                  }
                 }
               }
             }
@@ -327,9 +363,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "integer",
-                  "description": "userId",
-                  "example": 1
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "integer",
+                      "description": "userId",
+                      "example": 1
+                    }
+                  }
                 }
               }
             }
@@ -337,6 +378,60 @@
         },
         "tags": [
           "TempUser API"
+        ]
+      }
+    },
+    "/user/kakao-login": {
+      "summary": "kako login api",
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "userId",
+                  "kakaoName"
+                ],
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "default": "123df43ds12"
+                  },
+                  "kakaoName": {
+                    "type": "string",
+                    "default": "홍길동"
+                  },
+                  "email": {
+                    "type": "string",
+                    "default": "kaksem@naver.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "uid return",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User API"
         ]
       }
     }
@@ -362,6 +457,9 @@
             "type": "string"
           },
           "phoneNumber": {
+            "type": "string"
+          },
+          "kakaoId": {
             "type": "string"
           }
         }
@@ -416,6 +514,10 @@
                 "phone": {
                   "type": "string",
                   "default": "010-000-0000"
+                },
+                "kakaoId": {
+                  "type": "string",
+                  "default": null
                 }
               }
             }

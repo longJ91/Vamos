@@ -29,31 +29,6 @@ module.exports.isDuplicateEmail = async function(email){
     return true;
 }
 
-module.exports.validUserInfo = function(userForm){
-    const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const phoneFormat = /^[0-9]{3}[-]+[0-9]{3,4}[-]+[0-9]{4}$/;
-    const birthFormat = /^[0-9]{6}/;
-    const nameFormat = /^[^0-9]*/;
-    const PWD_MAX_LENGTH =5;
-
-    if(commonUtil.isEmpty(userForm.email)|| !userForm.email.match(mailFormat)){
-        return false;
-    }
-    if(commonUtil.isEmpty(userForm.pwd)|| !userForm.pwd.length > PWD_MAX_LENGTH ){
-        return false;
-    }
-    if(commonUtil.isEmpty(userForm.name) || !userForm.name.match(nameFormat)){
-        return false;
-    }
-    if(!commonUtil.isEmpty(userForm.phone) && !userForm.phone.match(phoneFormat)){
-        return false;
-    }
-    if(!commonUtil.isEmpty(userForm.birth) && !userForm.birth.match(birthFormat)){
-        return false;
-    }
-    return true;
-}
-
 module.exports.insertUserInfo = async function(userForm){
     let result = await User.create({
                     email : userForm.email,
@@ -108,5 +83,30 @@ module.exports.inserTempUserInfo = async function(groupId, name ,pwd){
         name : name,
         password : pwd
     });     
+    return result.id;
+}
+
+module.exports.isDuplicateKakaoId = async function(kakaoId){
+    console.log(kakaoId);
+    let user = await User.findOne({where:{kakaoId: kakaoId}});
+    if(commonUtil.isEmpty(user)){
+        return -1;
+    }
+    return user.id;
+}
+
+module.exports.kakaoSignUp = async function(kakaoId, kakaoNickName, kakaoEmail){
+    let timestamp = Date.now();
+    let email = kakaoEmail;
+    if(commonUtil.isEmpty(email)){
+        email = commonUtil.encryption(kakaoId + "EMAIL" + timestamp) + "@kakao.com";
+    }
+    let password = commonUtil.encryption(kakaoId + "PWD" + timestamp);
+    let result = await User.create({
+        email : email,
+        password : password,
+        name : kakaoNickName,
+        kakaoId : kakaoId
+    });  
     return result.id;
 }
