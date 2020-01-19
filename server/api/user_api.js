@@ -85,3 +85,28 @@ module.exports.inserTempUserInfo = async function(groupId, name ,pwd){
     });     
     return result.id;
 }
+
+module.exports.isDuplicateKakaoId = async function(kakaoId){
+    console.log(kakaoId);
+    let user = await User.findOne({where:{kakaoId: kakaoId}});
+    if(commonUtil.isEmpty(user)){
+        return -1;
+    }
+    return user.id;
+}
+
+module.exports.kakaoSignUp = async function(kakaoId, kakaoNickName, kakaoEmail){
+    let timestamp = Date.now();
+    let email = kakaoEmail;
+    if(commonUtil.isEmpty(email)){
+        email = commonUtil.encryption(kakaoId + "EMAIL" + timestamp) + "@kakao.com";
+    }
+    let password = commonUtil.encryption(kakaoId + "PWD" + timestamp);
+    let result = await User.create({
+        email : email,
+        password : password,
+        name : kakaoNickName,
+        kakaoId : kakaoId
+    });  
+    return result.id;
+}

@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) =>{
             validate: {
                 is: /^[0-9]{3}[-]+[0-9]{3,4}[-]+[0-9]{4}$/
             }
+        },
+        kakaoId:{
+            type: DataTypes.STRING(20),
+            allowNull: true
         }
     }, {timestamps : false});
 }

@@ -11,7 +11,7 @@ router.post('/login', wrap(async function(req, res){
         throw new CustomError(`No Parameter email, password`, 400);
     }
     let result = await userApi.login(email, pwd);
-    res.status(200).json(result);
+    res.status(200).json({uid: result});
 }));
 
 router.get('/info', wrap(async function(req,res){
@@ -29,7 +29,7 @@ router.get('/duplicate-email', wrap(async function(req, res){
         throw new CustomError(`No Parameter email`, 400);
     }
     let duplicated = await userApi.isDuplicateEmail(email);
-    res.status(200).json(duplicated);
+    res.status(200).json({duplicate_email : duplicated});
 }));
 
 router.post('/sign-up', wrap(async function(req, res){
@@ -39,13 +39,14 @@ router.post('/sign-up', wrap(async function(req, res){
         throw new CustomError(`Duplicate Email address`);
     }
     let id = await userApi.insertUserInfo(userForm);
-    res.status(200).json(id);
+    res.status(200).json({uid: id});
 }));
 
 router.post('/edit-info', wrap(async function(req,res){
     let userForm = req.body;
+    await userApi.getUserInfo(userForm.id); //check user
     await userApi.updateUserInfo(userForm);
-    res.status(200).json("UPDATE");
+    res.status(200).json({status : "UPDATE"});
 }));
 
 router.post('/widthdrawal', wrap(async function(req, res){
@@ -54,7 +55,7 @@ router.post('/widthdrawal', wrap(async function(req, res){
         throw new CustomError(`No Parameter user id`, 400);
     }
     await userApi.deleteUserInfo(id);
-    res.status(200).json("SUCCESS");
+    res.status(200).json({status : "SUCCESS"});
 }));
 
 router.post('/temp-login', wrap(async function(req, res){
@@ -66,7 +67,7 @@ router.post('/temp-login', wrap(async function(req, res){
         throw new CustomError(`No Parameter name ,pwd, group id`, 400);
     }
     let result = await userApi.tempLogin(groupId, name, pwd);
-    res.status(200).json(result);
+    res.status(200).json({uid: result});
 }));
 
 router.get('/duplicate-temp-name', wrap(async function(req, res){
@@ -76,7 +77,7 @@ router.get('/duplicate-temp-name', wrap(async function(req, res){
         throw new CustomError(`No Parameter name , group id`, 400);
     }
     let duplicated = await userApi.isDuplicateNameInGroup(name, groupId);
-    res.status(200).json(duplicated);
+    res.status(200).json({status :duplicated});
 }));
 
 router.post('/temp-sign-up', wrap(async function(req,res){
@@ -91,7 +92,24 @@ router.post('/temp-sign-up', wrap(async function(req,res){
         throw new CustomError(`Duplicate name`);
     }
     let id = await userApi.inserTempUserInfo(groupId, name ,pwd);
-    res.status(200).json(id);
+    res.status(200).json({uid: id});
+}));
+
+router.post('/kakao-login', wrap(async function(req, res){
+    let kakaoId = req.body.userId;
+    let kakaoNickName = req.body.kakaoName;
+    let kakaoEmail = req.body.email;
+
+    let alreadyUserId = await userApi.isDuplicateKakaoId(kakaoId);
+    if(alreadyUserId!= -1){
+        console.log("kakao login")
+        res.status(200).json({uid : alreadyUserId});
+    }
+    else{
+        console.log("kakao sign up")
+        let newUserId = await userApi.kakaoSignUp(kakaoId, kakaoNickName, kakaoEmail);
+        res.status(200).json({uid: newUserId});
+    }
 }));
 
 module.exports = router;

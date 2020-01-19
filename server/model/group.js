@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) =>{
             comment : "group host's ID who created this group"
         },
         groupDates : {
-            type: DataTypes.DATE(),
+            type: DataTypes.STRING(5000),
             allowNull: false,
             comment : "the meeting candidate dates of the vote"
         },
