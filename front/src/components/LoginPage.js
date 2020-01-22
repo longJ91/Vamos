@@ -48,6 +48,7 @@ class LoginPage extends Component {
     }
 
     componentDidMount(){
+        
         window.Kakao.Auth.createLoginButton({
             container: "#kakao-login-btn",
             success: function(authObj) {
@@ -82,6 +83,7 @@ class LoginPage extends Component {
     }
 
     render() {
+        
         const { handleChange, handleClick } = this;
 
         return (

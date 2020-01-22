@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import LoginPage from './components/LoginPage'
-import SignUpPage from './components/SignUpPage'
+import LoginPage from './components/LoginPage';
+import SignUpPage from './components/SignUpPage';
 import MeetingPage from './meeting/MeetingPage';
+import ErrorBoundary from './ErrorBoundary';
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -32,24 +33,26 @@ class App extends Component {
         const { classes } = this.props; 
 
         return(
-            <div className={classes.root}>
-                <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                    Vamos 
-                    </Typography>
-                    <Button color="inherit">BUTTON</Button>
-                </Toolbar>
-                </AppBar>
-                <div>
-                    <Route exact path='/' component={LoginPage}/>
-                    <Route exact path='/sign-up-page' component={SignUpPage}/>
-                    <Route exact path='/meeting-page' component={MeetingPage}/>
+            <ErrorBoundary>
+                <div className={classes.root}>
+                    <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                        Vamos 
+                        </Typography>
+                        <Button color="inherit">BUTTON</Button>
+                    </Toolbar>
+                    </AppBar>
+                    <div>
+                        <Route exact path='/' component={LoginPage}/>
+                        <Route exact path='/sign-up-page' component={SignUpPage}/>
+                        <Route exact path='/meeting-page' component={MeetingPage}/>
+                    </div>
                 </div>
-            </div>
+            </ErrorBoundary>
         );
     }
 }
