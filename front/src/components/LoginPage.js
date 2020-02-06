@@ -5,11 +5,13 @@ import { LoginPageActions } from 'store/actionCreators';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import KakaoLogin from 'react-kakao-login';
 
 import './LoginPage.css'
 
 import * as api from '../lib/api';
 
+const KAKAO_JAVASCRIPT_KEY = '0ff66458bef2e0cd76aadc3562843c62';
 
 class LoginPage extends Component {
     // state = {
@@ -19,6 +21,10 @@ class LoginPage extends Component {
 
     postLogin = async (email, pwd) => {
         return await api.postLogin(email, pwd);
+    }
+
+    postKakaoLogin = async (userId, kakaoName, email) => {
+        return await api.postKakaoLogin(userId, kakaoName, email);
     }
 
     handleChange = (e) => {
@@ -47,39 +53,23 @@ class LoginPage extends Component {
         });
     }
 
-    componentDidMount(){
-        
-        window.Kakao.Auth.createLoginButton({
-            container: "#kakao-login-btn",
-            success: function(authObj) {
-                    // 로그인 성공시, API를 호출합니다.
-                    window.Kakao.API.request({
-                    url: "/v2/user/me",
-                    success: function(res) {
-                        console.log(JSON.stringify(res));
-                        api.postKakaoLogin(res.id, res.properties.nickname, '')
-                        .then(response => {
-                            // 수정 필요
-                            console.log(response);
-                            localStorage.setItem("USER_ID", response.data);
-                            this.props.history.push('/meeting-page');
-                        }).catch(error => {
-                            if (error.response.status === 500) {
-                                alert(error.response.data.Error);
-                            } else {
-                                console.log(error.response.data);
-                            }
-                        });
-                    },
-                    fail: function(error) {
-                        console.log(JSON.stringify(error));
-                    }
-                });
-            },
-            fail: function(err) {
-                alert(JSON.stringify(err));
+    handleKakaoLogin = (response) => {
+        console.log(response);
+        this.postKakaoLogin(response.profile.id, response.profile.properties.nickname, '')
+        .then(response => {
+            localStorage.setItem("USER_ID", response.data);
+            this.props.history.push('/meeting-page');
+        }).catch(error => {
+            if (error.response.status === 500) {
+                alert(error.response.data.Error);
+            } else {
+                console.log(error.response.data);
             }
         });
+    }
+
+    componentDidMount() {
+
     }
 
     render() {
@@ -102,8 +92,16 @@ class LoginPage extends Component {
                         로그인
                     </Button>
                 </div>
-                <div style={{textAlign: 'center'}}>
-                    <a id="kakao-login-btn"></a>
+                <div className="div-button">
+                    <KakaoLogin
+                        jsKey={KAKAO_JAVASCRIPT_KEY}
+                        onSuccess={result => this.handleKakaoLogin(result)}
+                        onFailure={result => console.log(result)}
+                        render={(props) => (
+                            <Button onClick={props.onClick}>카카오계정으로 로그인하기</Button>
+                        )}
+                        getProfile={true}
+                    />
                 </div>
                 <div className="div-signup">
                     <p>New to Vamos? <NavLink exact to="/sign-up-page" > Create an account.</NavLink></p>
